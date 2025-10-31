@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\OrderItemRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrderItemRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class OrderItem
 {
     #[ORM\Id]
@@ -15,30 +17,52 @@ class OrderItem
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Order $purchase = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'RESTRICT')]
     private ?Product $product = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du produit est obligatoire')]
+    #[Assert\Length(max: 255, maxMessage: 'Le nom du produit ne peut pas dépasser {{ limit }} caractères')]
     private ?string $productName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'image du produit est obligatoire')]
+    #[Assert\Length(max: 255, maxMessage: 'L\'image du produit ne peut pas dépasser {{ limit }} caractères')]
     private ?string $productPicture = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[Assert\NotBlank(message: 'Le prix unitaire est obligatoire')]
+    #[Assert\PositiveOrZero(message: 'Le prix unitaire doit être un nombre positif ou nul')]
     private ?string $unitPrice = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\NotNull(message: 'La quantité est obligatoire')]
+    #[Assert\Positive(message: 'La quantité doit être un nombre positif')]
     private ?int $quantity = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+    }
 
     public function getId(): ?int
     {
