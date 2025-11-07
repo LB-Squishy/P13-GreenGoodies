@@ -1,0 +1,23 @@
+{% set current_route = 'app_accueil' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}GreenGoodies - Homepage{% endblock %}
+
+{% block body %}
+<div class="welcomeContainer">
+    <div class="welcomeContainer__text">
+        <div class="welcomeContainer__text--wrapper">
+            <h1>Bienvenue</h1>
+            <p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable.</p>
+            <p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter éco-responsable.</p>
+        </div>
+    </div>
+    <div class="welcomeContainer__image">
+        <img src="{{ asset('uploads/welcome.webp') }}" alt="Bannière GreenGoodies">
+    </div>
+</div>
+<div class="welcomeProduitContainer">
+    <h2>Nos produits</h2>
+    
+</div>
+{% endblock %}
