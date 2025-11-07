@@ -17,7 +17,17 @@
     </div>
 </div>
 <div class="welcomeProduitContainer">
-    <h2>Nos produits</h2>
-    
+    <h2 class="welcomeProduitContainer__title">Nos produits</h2>
+    <div class="welcomeProduitContainer__list">
+        {% for product in products %}
+            <div class="welcomeProduitContainer__item">
+                <img src="{{ asset('uploads/products/md/' ~ product.picture) }}" alt="{{ product.name }}">
+                <h3 class="welcomeProduitContainer__item--name">{{ product.name }}</h3>
+                <p class="welcomeProduitContainer__item--description">{{ product.shortDescription }}</p>
+                <p class="welcomeProduitContainer__item--price">{{ product.price }}€</p>
+                <a href="#" class="welcomeProduitContainer__item--link">Voir le produit</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
