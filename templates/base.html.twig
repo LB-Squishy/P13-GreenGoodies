@@ -20,9 +20,15 @@
                 </a>
                 <ul class="nav__links">
                     <li><a href="{{ path('app_accueil') }}" class="{{ current_route == 'app_accueil' ? 'active' : '' }}">Nos produits</a></li>
-                    <li><a href="#">Mon panier</a></li>
-                    <li><a href="#">Mon compte</a></li>
-                    <li><a href="#">Connexion</a></li>
+                    {% if app.user %}
+                        <li><a href="#">Mon panier</a></li>
+                        <li><a href="#">Mon compte</a></li>
+                    {% endif %}
+                    {% if app.user %}
+                        <li><a href="{{ path('app_logout') }}" class="{{ current_route == 'app_logout' ? 'active' : '' }}">Déconnexion</a></li>
+                    {% else %}
+                    <li><a href="{{ path('app_login') }}" class="{{ current_route == 'app_login' or current_route == 'app_register' ? 'active' : '' }}">Connexion</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </header>
