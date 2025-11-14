@@ -4,30 +4,46 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="inscriptionContainer">
+    <div class="inscriptionContainer__image">
+        <img src="{{ asset('uploads/inscription.webp') }}" alt="Bannière inscription">
+    </div>
+    <div class="inscriptionContainer__form">
+        <h1>Inscription</h1>
+        <p>Tous les champs sont obligatoires.</p>
+        {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.lastName, {
+                label: 'Nom',
+                row_attr: { class: 'form-group' }
+            }) }}
+            {{ form_row(registrationForm.firstName, {
+                label: 'Prénom',
+                row_attr: { class: 'form-group' }
+            }) }}
+            {{ form_row(registrationForm.email, {
+                label: 'Adresse email',
+                row_attr: { class: 'form-group' }
+            }) }}
+            {{ form_row(registrationForm.plainPassword.first, {
+                label: 'Mot de passe',
+                row_attr: { class: 'form-group' }
+            }) }}
+            {{ form_row(registrationForm.plainPassword.second, {
+                label: 'Confirmation mot de passe',
+                row_attr: { class: 'form-group' }
+            }) }}
+            {{ form_row(registrationForm.cguAccepted, {
+                label: 'J\'accepte les CGU de GreenGoodies',
+                row_attr: { class: 'form-group-cgu form-group' }
+            }) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.lastName, {
-            label: 'Nom'
-        }) }}
-        {{ form_row(registrationForm.firstName, {
-            label: 'Prénom'
-        }) }}
-        {{ form_row(registrationForm.email, {
-            label: 'Adresse email'
-        }) }}
-        {{ form_row(registrationForm.plainPassword.first, {
-            label: 'Mot de passe'
-        }) }}
-        {{ form_row(registrationForm.plainPassword.second, {
-            label: 'Confirmation mot de passe'
-        }) }}
-        {{ form_row(registrationForm.cguAccepted, {
-            label: 'J\'accepte les CGU de GreenGoodies'
-        }) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <button type="submit" class="btn">S'inscrire</button>
+            <p class="inscriptionContainer__form--link">
+                <a href="{{ path('app_login') }}">Déjà un compte ? Se connecter</a>
+            </p>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}

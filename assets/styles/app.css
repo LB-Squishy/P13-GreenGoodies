@@ -14,9 +14,10 @@
 
 body {
     background-color: #fffdf7;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+}
+
+main {
+    min-height: calc(100vh - 162px);
 }
 
 a {
@@ -29,7 +30,6 @@ a {
 header {
     display: flex;
     flex-direction: row;
-    flex-shrink: 0;
 }
 
 nav {
@@ -90,17 +90,10 @@ nav {
     width: 100%;
 }
 
-/* Main */
-
-main {
-    flex: 1;
-}
-
 /* Footer */
 
 footer {
     display: flex;
-    flex-shrink: 0;
     text-align: center;
     justify-content: flex-end;
     align-items: center;
@@ -221,3 +214,114 @@ footer {
     background-color: #497555;
     color: #ffffff;
 }
+
+/* INSCRIPTION */
+
+/* Inscription Container */
+.inscriptionContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.inscriptionContainer__image {
+    position: relative;
+    min-height: calc(100vh - 162px);
+    width: 50%;
+    overflow: hidden;
+}
+
+.inscriptionContainer__form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 80px 113px 143px 80px;
+}
+
+.inscriptionContainer__image img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.inscriptionContainer__form h1 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.inscriptionContainer__form p {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 24px;
+    color: #666666;
+}
+
+.inscriptionContainer__form .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.inscriptionContainer__form .form-group-cgu {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 7px;
+    margin-bottom: 40px;
+}
+
+.inscriptionContainer__form .form-group-cgu input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
+    accent-color: #497555;
+}
+
+.inscriptionContainer__form .form-group label {
+    margin-bottom: 10px;
+    color: #666666;
+}
+
+.inscriptionContainer__form .form-group input {
+    width: 100%;
+    height: 67px;
+    font-size: 14px;
+    border: 1px solid #666666;
+    background-color: #fffdf7;
+    padding: 0 20px;
+}
+
+.inscriptionContainer__form .form-group input:focus {
+    border: 2px solid #497555;
+    outline: none;
+}
+
+.inscriptionContainer__form button {
+    width: 100%;
+    height: 77px;
+    color: #ffffff;
+    background-color: #565656;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.inscriptionContainer__form button:hover {
+    background-color: #497555;
+}
+
+.inscriptionContainer__form--link {
+    text-align: center;
+    margin-top: 27px;
+    text-decoration: underline;
+    transition: color 0.3s ease-in-out;
+}
+
+.inscriptionContainer__form--link:hover {
+    color: #497555;
+}
+
+/* LOGIN */
