@@ -4,11 +4,11 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<div class="inscriptionContainer">
-    <div class="inscriptionContainer__image">
+<div class="authContainer">
+    <div class="authContainer-image">
         <img src="{{ asset('uploads/inscription.webp') }}" alt="Bannière inscription">
     </div>
-    <div class="inscriptionContainer__form">
+    <div class="authContainer-form">
         <h1>Inscription</h1>
         <p>Tous les champs sont obligatoires.</p>
         {{ form_errors(registrationForm) }}
@@ -40,7 +40,7 @@
             }) }}
 
             <button type="submit" class="btn">S'inscrire</button>
-            <p class="inscriptionContainer__form--link">
+            <p class="link">
                 <a href="{{ path('app_login') }}">Déjà un compte ? Se connecter</a>
             </p>
         {{ form_end(registrationForm) }}

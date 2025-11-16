@@ -15,10 +15,10 @@
 
         <header>
             <nav>
-                <a href="{{ path('app_accueil') }}" class="nav__logo">
+                <a href="{{ path('app_accueil') }}">
                     <img src="{{ asset('uploads/logo.svg') }}" alt="Logo GreenGoodies">
                 </a>
-                <ul class="nav__links">
+                <ul>
                     <li><a href="{{ path('app_accueil') }}" class="{{ current_route == 'app_accueil' ? 'active' : '' }}">Nos produits</a></li>
                     {% if app.user %}
                         <li><a href="#">Mon panier</a></li>
