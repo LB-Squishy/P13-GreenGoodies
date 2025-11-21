@@ -25,8 +25,11 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/product/{id}', name: 'app_product_show')]
-    public function showProduct(Product $product): Response
+    public function showProduct(?Product $product): Response
     {
+        if (!$product || !$product->isActive()) {
+            throw $this->createNotFoundException('Le produit demandé n\'existe pas ou n\'est plus disponible. Passer la valeur is_active à 1 dans la table product pour le rendre actif ou créez le produit.');
+        }
         return $this->render('product/product.html.twig', [
             'product' => $product,
         ]);

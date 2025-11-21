@@ -370,3 +370,38 @@ footer {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
 }
+
+/* ----------- ERROR ---------- */
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    background-color: var(--color-background-tertiary);
+    text-align: center;
+}
+
+.error-container h1 {
+    font-size: 8rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    margin-top: 100px;
+}
+
+.error-container .error-message {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 50px;
+}
+
+.error-container .error-description {
+    color: var(--color-text-secondary);
+    margin-bottom: 40px;
+}
+
+.error-container .btn {
+    width: 479px;
+}
