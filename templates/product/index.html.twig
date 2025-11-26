@@ -24,7 +24,7 @@
                 <img src="{{ asset('uploads/products/md/' ~ product.picture) }}" alt="{{ product.name }}">
                 <h3>{{ product.name }}</h3>
                 <p class="description">{{ product.shortDescription }}</p>
-                <p class="price">{{ product.price }}€</p>
+                <p class="price">{{ product.price|number_format(2, ',', ' ') }}€</p>
                 <a href="{{ path('app_product_show', {'id': product.id}) }}" class="link">Voir le produit</a>
             </div>
         {% endfor %}

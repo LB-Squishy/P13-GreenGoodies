@@ -5,19 +5,45 @@
 
 {% block body %}
 
-<div class="productList">
-    <h2>Nos produits</h2>
-    <div class="productList-grid">
-        {% for cartItem in cartItems %}
-            <div class="productList-item">
-                <img src="{{ asset('uploads/products/md/' ~ cartItem.product.picture) }}" alt="{{ cartItem.product.name }}">
-                <h3>{{ cartItem.product.name }}</h3>
-                <p class="description">{{ cartItem.product.shortDescription }}</p>
-                <p class="price">{{ cartItem.product.price }}€</p>
-                <p>Quantité : {{ cartItem.quantity }}</p>
+<div class="cartContainer">
+    <div class="cartContainer-wrapper">
+        <h1>Mon panier</h2>
+        {% if cartItems is empty %}
+        <div class="cartList">
+            <div class="cartList-item">
+                <p>Votre panier est vide.</p>
             </div>
-        {% endfor %}
+        </div>
+        <div class="cartContainer-button">
+            <a href="{{ path('app_accueil') }}" class="btn">Consulter nos produits</a>
+        </div>
+        {% else %}
+        <p class="link">
+            <a href="#">x Vider le panier</a>
+        </p>
+        <div class="cartList">
+            {% for cartItem in cartItems %}
+            <a href="{{ path('app_product_show', {'id': cartItem.product.id}) }}" class="cartList-item">
+                <img src="{{ asset('uploads/products/sm/' ~ cartItem.product.picture) }}" alt="{{ cartItem.product.name }}">
+                <div class="infos">
+                    <h2>{{ cartItem.product.name }}</h2>
+                    <p class="quantity">Quantité : {{ cartItem.quantity }}</p>
+                    <p class="price">{{ cartItem.product.price|number_format(2, ',', ' ') }}€</p>
+                </div>
+            </a>
+            {% endfor %}
+            <div class="cartList-total">
+                <div class="totalPrice">
+                    <p class="totalPrice-text">Total panier :</p>
+                    <p class="totalPrice-price">{{ cartTotalPrice|number_format(2, ',', ' ') }}€</p>
+                </div>
+                <p class="livraison">Frais de livraison : Offert</p>
+            </div>
+        </div> 
+        <div class="cartContainer-button">
+            <button type="submit" href="#" class="btn">Valider la commande</button>
+        </div>
+        {% endif %}
     </div>
-    <p>TotalPrice : {{ cartTotalPrice }}€</p>
 </div>
 {% endblock %}

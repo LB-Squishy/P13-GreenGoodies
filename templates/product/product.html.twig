@@ -11,15 +11,32 @@
         <div class="productContainer-details">
             <div class="productContainer-info">
                 <h1>{{ product.name }}</h1>
-                <p class="price">{{ product.price }}€</p>
-                <p> {{ quantityItemInCart}} <p>
+                <div class="price-quantity">
+                    <p class="price">{{ product.price|number_format(2, ',', ' ') }}€</p>
+                    {% if app.user %}
+                        <input 
+                            type="number"
+                            id="quantity"
+                            class="quantity"
+                            name="quantity"
+                            min="1"
+                            max="999"
+                            value="{{ quantityItemInCart }}"
+                            required
+                        >
+                    {% endif %}
+                </div>
                 <p class="label">Description</p>
                 <p class="description">{{ product.shortDescription }}</p>
             </div>
             {% if app.user %}
-                <button type="submit" href="#" class="btn">Ajouter au panier</button>
+                {% if quantityItemInCart > 0 %}
+                    <button type="submit" href="#" class="btn">Mettre à jour</button>
+                {% else %}
+                    <button type="submit" href="#" class="btn">Ajouter au panier</button>
+                {% endif %}
             {% else %}
-                <a href="{{ path('app_login') }}" class="btn">Ajouter au panier</a>
+                <a href="{{ path('app_login') }}" class="btn">Se connecter pour accéder au panier</a>
             {% endif %}
         </div>
     </div>
