@@ -1,0 +1,23 @@
+{% set current_route = 'app_cart_show' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}GreenGoodies - Mon Panier{% endblock %}
+
+{% block body %}
+
+<div class="productList">
+    <h2>Nos produits</h2>
+    <div class="productList-grid">
+        {% for cartItem in cartItems %}
+            <div class="productList-item">
+                <img src="{{ asset('uploads/products/md/' ~ cartItem.product.picture) }}" alt="{{ cartItem.product.name }}">
+                <h3>{{ cartItem.product.name }}</h3>
+                <p class="description">{{ cartItem.product.shortDescription }}</p>
+                <p class="price">{{ cartItem.product.price }}€</p>
+                <p>Quantité : {{ cartItem.quantity }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <p>TotalPrice : {{ cartTotalPrice }}€</p>
+</div>
+{% endblock %}

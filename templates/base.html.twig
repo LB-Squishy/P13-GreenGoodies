@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="{{ path('app_accueil') }}" class="{{ current_route == 'app_accueil' ? 'active' : '' }}">Nos produits</a></li>
                     {% if app.user %}
-                        <li><a href="#">Mon panier</a></li>
+                        <li><a href="{{ path('app_cart_show') }}" class="{{ current_route == 'app_cart_show' ? 'active' : '' }}">Mon panier</a></li>
                         <li><a href="#">Mon compte</a></li>
                     {% endif %}
                     {% if app.user %}

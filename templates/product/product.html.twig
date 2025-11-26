@@ -12,11 +12,12 @@
             <div class="productContainer-info">
                 <h1>{{ product.name }}</h1>
                 <p class="price">{{ product.price }}€</p>
+                <p> {{ quantityItemInCart}} <p>
                 <p class="label">Description</p>
                 <p class="description">{{ product.shortDescription }}</p>
             </div>
             {% if app.user %}
-                <button href="#" class="btn">Ajouter au panier</button>
+                <button type="submit" href="#" class="btn">Ajouter au panier</button>
             {% else %}
                 <a href="{{ path('app_login') }}" class="btn">Ajouter au panier</a>
             {% endif %}
