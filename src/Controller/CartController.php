@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class CartController extends AbstractController
 {
@@ -20,15 +21,11 @@ final class CartController extends AbstractController
     ) {}
 
     #[Route('/panier', name: 'app_cart_show')]
+    #[IsGranted('ROLE_USER')]
     public function index(): Response
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
-
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-
         $cart = $user->getCart();
         $cartItems = [];
         $cartTotalPrice = 0.00;
@@ -44,5 +41,98 @@ final class CartController extends AbstractController
             'cartItems' => $cartItems,
             'cartTotalPrice' => $cartTotalPrice,
         ]);
+    }
+
+    #[Route('/panier/ajouter/{id}', name: 'app_cart_add', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function addItemInCart(Product $product, Request $request): Response
+    {
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+
+        // Vérifie le token CSRF
+        $token = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('cart_add_' . $product->getId(), $token)) {
+            $this->addFlash('error', 'Invalid CSRF token.');
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        }
+
+        // Récupération ou création du panier
+        $cart = $user->getCart();
+        if (!$cart) {
+            $cart = new Cart();
+            $user->setCart($cart);
+            $this->entityManager->persist($cart);
+        }
+
+        // Récupération ou du produit dans le panier
+        $cartItem = $this->cartItemRepository->findOneBy([
+            'cart' => $cart,
+            'product' => $product,
+        ]);
+
+        // Récupération de la quantité depuis le formulaire
+        $quantity = (int) $request->request->get('quantity');
+
+        // Mise à jour ou ajout du produit dans le panier
+        if ($cartItem) {
+            // Mise à jour de la quantité
+            if ($quantity > 0) {
+                $cartItem->setQuantity($quantity);
+                $this->entityManager->persist($cartItem);
+                $this->addFlash('success', 'La quantité du produit a été mise à jour dans votre panier.');
+            } else {
+                // Suppression du produit du panier si la quantité est à zéro
+                $this->entityManager->remove($cartItem);
+                $this->addFlash('success', 'Le produit a été supprimé de votre panier.');
+            }
+        } else {
+            // Ajout du produit au panier
+            if ($quantity > 0) {
+                $cartItem = new CartItem();
+                $cartItem->setCart($cart);
+                $cartItem->setProduct($product);
+                $cartItem->setQuantity($quantity);
+                $this->entityManager->persist($cartItem);
+                $this->addFlash('success', 'Le produit a été ajouté à votre panier.');
+            } else {
+                $this->addFlash('error', 'La quantité doit être supérieure à zéro pour ajouter un produit au panier.');
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('app_cart_show');
+    }
+
+    #[Route('/panier/vider', name: 'app_cart_remove_all', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function removeAllFromCart(Request $request): Response
+    {
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+
+        // Vérifie le token CSRF
+        $token = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('cart_remove_all', $token)) {
+            $this->addFlash('error', 'Invalid CSRF token.');
+            return $this->redirectToRoute('app_cart_show');
+        }
+
+        // Récupération du panier
+        $cart = $user->getCart();
+
+        if ($cart) {
+            // Récupération des produits du panier
+            $cartItems = $cart->getCartItems();
+            // Suppression de tous les produits du panier
+            foreach ($cartItems as $cartItem) {
+                $this->entityManager->remove($cartItem);
+            }
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Tous les produits ont été supprimés de votre panier.');
+        }
+
+        return $this->redirectToRoute('app_cart_show');
     }
 }

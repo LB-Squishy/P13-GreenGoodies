@@ -5,6 +5,18 @@
 
 {% block body %}
 
+{# {% for message in app.flashes('success') %}
+    <div class="flash-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="flash-error">
+        {{ message }}
+    </div>
+{% endfor %} #}
+
 <div class="cartContainer">
     <div class="cartContainer-wrapper">
         <h1>Mon panier</h2>
@@ -19,7 +31,10 @@
         </div>
         {% else %}
         <p class="link">
-            <a href="#">x Vider le panier</a>
+            <form method="post" action="{{ path('app_cart_remove_all')}}" onsubmit="return confirm('Êtes-vous sûr de vouloir vider votre panier ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('cart_remove_all') }}">
+                <button type="submit" class="linkBtn">x Vider le panier</button>
+            </form>
         </p>
         <div class="cartList">
             {% for cartItem in cartItems %}

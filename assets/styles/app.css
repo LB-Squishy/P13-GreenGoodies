@@ -68,6 +68,11 @@ a {
     background-color: var(--color-primary);
 }
 
+.alert-danger {
+    color: red;
+    margin-bottom: 20px;
+}
+
 /* -----------LAYOUT---------- */
 
 /* Navigation */
@@ -422,12 +427,15 @@ footer {
     margin-bottom: 16px;
 }
 
-.cartContainer-wrapper .link {
+.cartContainer-wrapper .linkBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
     color: var(--color-text-secondary);
     margin-bottom: 16px;
 }
 
-.cartContainer-wrapper .link:hover {
+.cartContainer-wrapper .linkBtn:hover {
     color: var(--color-primary);
 }
 

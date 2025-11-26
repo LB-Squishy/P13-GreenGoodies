@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user
             ->setEmail('admin@geengoodies.com')
-            ->setRoles(['ROLE_ADMIN'])
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
             ->setPassword($this->userPasswordHasher->hashPassword($user, 'admin'))
             ->setLastName('Dupond')
             ->setFirstName('Jane')
