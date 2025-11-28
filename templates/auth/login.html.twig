@@ -30,9 +30,6 @@
                         <label for="_remember_me">Remember me</label>
                     </div>
                 #}
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
                 <button class="btn" type="submit">
                     Se connecter
                 </button>

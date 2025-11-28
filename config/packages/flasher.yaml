@@ -1,0 +1,10 @@
+flasher:
+    default: flasher
+
+    # Scripts et styles
+    inject_assets: true
+
+    # Options par défaut
+    options:
+        timeout: 4000
+        position: "top-left"

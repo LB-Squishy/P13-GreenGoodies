@@ -1,0 +1,23 @@
+{% set current_route = 'app_accueil' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}GreenGoodies - Erreur{% endblock %}
+
+{# 
+Ne s'affiche qu'en production, lorsque une erreur est rencontrée. 
+Pour l'afficher 
+- allez sur l'url http://127.0.0.1:8000/_error/408 en dev ou autres code erreur pour toutes les erreurs non gérées spécifiquement,
+ou
+- passez en prod avec APP_ENV=prod apres compilation des assets. 
+#}
+
+{% block body %}
+<div class="error-container">
+    <div>
+        <h1>Oups !</h1>
+        <p class="error-message">Une erreur est survenue</p>
+        <p class="error-description">Nous rencontrons actuellement un problème technique. Veuillez réessayer plus tard.</p>
+    </div>
+    <a href="{{ path('app_accueil') }}" class="btn">Retour à l'accueil</a>
+</div>
+{% endblock %}

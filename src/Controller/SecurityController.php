@@ -12,11 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+use function Flasher\Prime\flash;
+
 class SecurityController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser()) {
+            flash()->info('Vous êtes déjà connecté.');
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $user = new User();
         $user->setRoles(['ROLE_USER']);
 
@@ -33,6 +40,8 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            flash()->success('Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.');
+
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_login');
@@ -46,8 +55,17 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if ($this->getUser()) {
+            flash()->info('Vous êtes déjà connecté.');
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+
+        if ($error) {
+            flash()->error('Identifiants incorrects. Veuillez réessayer.');
+        }
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();

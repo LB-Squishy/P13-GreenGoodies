@@ -34,7 +34,7 @@ final class ProductController extends AbstractController
     public function showProduct(?Product $product): Response
     {
         if (!$product || !$product->isActive()) {
-            throw $this->createNotFoundException('Le produit demandé n\'existe pas ou n\'est plus disponible. Passer la valeur is_active à 1 dans la table product pour le rendre actif ou créez le produit.');
+            throw $this->createNotFoundException('Le produit demandé n\'existe pas ou n\'est plus disponible.');
         }
 
         /** @var \App\Entity\User|null $user */

@@ -45,15 +45,21 @@ final class CartController extends AbstractController
 
     #[Route('/panier/ajouter/{id}', name: 'app_cart_add', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function addItemInCart(Product $product, Request $request): Response
+    public function addItemInCart(?Product $product, Request $request): Response
     {
+        // Vérifie si le produit est actif et existe
+        if (!$product || !$product->isActive()) {
+            flash()->error('Le produit demandé n\'existe pas ou n\'est plus disponible.');
+            return $this->redirectToRoute('app_accueil');
+        }
+
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
 
         // Vérifie le token CSRF
         $token = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('cart_add_' . $product->getId(), $token)) {
-            $this->addFlash('error', 'Invalid CSRF token.');
+            flash()->error('Une erreur est survenue.');
             return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
         }
 
@@ -80,11 +86,11 @@ final class CartController extends AbstractController
             if ($quantity > 0) {
                 $cartItem->setQuantity($quantity);
                 $this->entityManager->persist($cartItem);
-                $this->addFlash('success', 'La quantité du produit a été mise à jour dans votre panier.');
+                flash()->success('La quantité du produit a été mise à jour dans votre panier.');
             } else {
                 // Suppression du produit du panier si la quantité est à zéro
                 $this->entityManager->remove($cartItem);
-                $this->addFlash('success', 'Le produit a été supprimé de votre panier.');
+                flash()->success('Le produit a été supprimé de votre panier.');
             }
         } else {
             // Ajout du produit au panier
@@ -94,9 +100,9 @@ final class CartController extends AbstractController
                 $cartItem->setProduct($product);
                 $cartItem->setQuantity($quantity);
                 $this->entityManager->persist($cartItem);
-                $this->addFlash('success', 'Le produit a été ajouté à votre panier.');
+                flash()->success('Le produit a été ajouté à votre panier.');
             } else {
-                $this->addFlash('error', 'La quantité doit être supérieure à zéro pour ajouter un produit au panier.');
+                flash()->error('La quantité doit être supérieure à zéro pour ajouter un produit au panier.');
             }
         }
 
@@ -115,7 +121,7 @@ final class CartController extends AbstractController
         // Vérifie le token CSRF
         $token = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('cart_remove_all', $token)) {
-            $this->addFlash('error', 'Invalid CSRF token.');
+            flash()->error('Une erreur est survenue.');
             return $this->redirectToRoute('app_cart_show');
         }
 
@@ -130,7 +136,7 @@ final class CartController extends AbstractController
                 $this->entityManager->remove($cartItem);
             }
             $this->entityManager->flush();
-            $this->addFlash('success', 'Tous les produits ont été supprimés de votre panier.');
+            flash()->success('Tous les produits ont été supprimés de votre panier.');
         }
 
         return $this->redirectToRoute('app_cart_show');

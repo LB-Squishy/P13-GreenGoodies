@@ -1,0 +1,23 @@
+{% set current_route = 'app_accueil' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}GreenGoodies - Erreur serveur{% endblock %}
+
+{# 
+Ne s'affiche qu'en production, lorsque une page 500 est rencontrée. 
+Pour l'afficher 
+- allez sur l'url http://127.0.0.1:8000/_error/500 en dev,
+ou
+- passez en prod avec APP_ENV=prod apres compilation des assets. 
+#}
+
+{% block body %}
+<div class="error-container">
+    <div>
+        <h1>500</h1>
+        <p class="error-message">Erreur serveur</p>
+        <p class="error-description">Une erreur est survenue sur le serveur. Veuillez réessayer plus tard.</p>
+    </div>
+    <a href="{{ path('app_accueil') }}" class="btn">Retour à l'accueil</a>
+</div>
+{% endblock %}
