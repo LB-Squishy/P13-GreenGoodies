@@ -26,17 +26,26 @@
                 <h2>Mon accès API</h2>
                 {% if not app.user.apiAccessEnabled %}
                 <div class="orderContainer-button">
-                    <a href="{{ path('app_cart_show') }}" class="btn">Activer mon accès API</a>
+                    <form method="post" action="{{ path('app_api_access_enable')}}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('app_api_access_enable') }}">
+                        <button type="submit" class="btn">Activer mon accès API</button>
+                    </form>
                 </div>
                 {% else %}
                 <div class="orderContainer-button">
-                    <a href="{{ path('app_cart_show') }}" class="btn">Désactiver mon accès API</a>
+                    <form method="post" action="{{ path('app_api_access_disable')}}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('app_api_access_disable') }}">
+                        <button type="submit" class="btn">Désactiver mon accès API</button>
+                    </form>
                 </div>
                 {% endif %}
             </div>
             <div class="orderCard">
                 <div class="orderContainer-button">
-                    <a href="{{ path('app_cart_show') }}" class="btn">Supprimer mon compte</a>
+                    <form method="post" action="{{ path('app_delete_account')}}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte et toutes vos données associées ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('app_delete_account') }}">
+                        <button type="submit" class="btn">Supprimer mon compte</button>
+                    </form>
                 </div>
             </div>
         </div>
