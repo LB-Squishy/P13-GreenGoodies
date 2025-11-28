@@ -522,6 +522,67 @@ footer {
     width: 479px;
 }
 
+/* ----------- ORDER ---------- */
+
+.orderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+    background-color: var(--color-background-account);
+}
+
+.orderContainer-wrapper {
+    width: 604px;
+    margin: 43px auto 77px auto;
+}
+
+.orderContainer-wrapper h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 43px;
+}
+
+.orderCard-List {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.orderCard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+    background-color: var(--color-background);
+    padding: 60px;
+}
+
+.orderCard h2 {
+    color: black;
+    font-weight: 600;
+}
+
+.orderCard-orderList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+}
+
+.orderContainer-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.orderContainer-button .btn {
+    width: 479px;
+}
+
 /* ----------- ERROR ---------- */
 
 .error-container {

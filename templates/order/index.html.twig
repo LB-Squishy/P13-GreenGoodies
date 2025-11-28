@@ -1,0 +1,45 @@
+{% set current_route = 'app_order_show' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}GreenGoodies - Mon Compte{% endblock %}
+
+{% block body %}
+
+<div class="orderContainer">
+    <div class="orderContainer-wrapper">
+        <h1>Mon compte</h1>
+        <div class="orderCard-List">
+            <div class="orderCard">
+                <h2>Mes commandes</h2>
+                {% if order is empty %}
+                <div class="orderCard-orderList">
+                    <p>Votre historique de commandes est vide.</p>
+                    <div class="orderContainer-button">
+                        <a href="{{ path('app_cart_show') }}" class="btn">Consulter mon panier</a>
+                    </div>
+                </div>
+                {% else %}
+                    <p>Votre historique de commandes.</p>
+                {% endif %}
+            </div>
+            <div class="orderCard">
+                <h2>Mon accès API</h2>
+                {% if not app.user.apiAccessEnabled %}
+                <div class="orderContainer-button">
+                    <a href="{{ path('app_cart_show') }}" class="btn">Activer mon accès API</a>
+                </div>
+                {% else %}
+                <div class="orderContainer-button">
+                    <a href="{{ path('app_cart_show') }}" class="btn">Désactiver mon accès API</a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="orderCard">
+                <div class="orderContainer-button">
+                    <a href="{{ path('app_cart_show') }}" class="btn">Supprimer mon compte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

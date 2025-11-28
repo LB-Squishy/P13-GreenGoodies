@@ -22,7 +22,7 @@
                     <li><a href="{{ path('app_accueil') }}" class="{{ current_route == 'app_accueil' ? 'active' : '' }}">Nos produits</a></li>
                     {% if is_granted('ROLE_USER') %}
                         <li><a href="{{ path('app_cart_show') }}" class="{{ current_route == 'app_cart_show' ? 'active' : '' }}">Mon panier</a></li>
-                        <li><a href="#">Mon compte</a></li>
+                        <li><a href="{{ path('app_order_show') }}" class="{{ current_route == 'app_order_show' ? 'active' : '' }}">Mon compte</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="#">Gestion des commandes</a></li>
