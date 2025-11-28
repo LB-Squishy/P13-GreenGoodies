@@ -40,8 +40,10 @@ cd EcoGardenApi
 
 Créez un fichier .env.local et configurez vos variables d'environnement
 
-```
-DATABASE_URL="mysql://root:motdepasse@127.0.0.1:3306/greengoodies?serverVersion=9.1"
+```env
+DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/GreenGoodies?serverVersion=9.1.0&charset=utf8mb4"
+APP_SECRET=ta_clé_secret
+JWT_PASSPHRASE=ta_passphrase
 ```
 
 ### 3. Installer les dépendances
@@ -52,54 +54,48 @@ composer install
 
 ### 4. Configuration de la base de données
 
-Créez la base de données :
+Créez la base de données et l'alimenter :
 
 ```bash
 php bin/console doctrine:database:create --if-not-exists
-```
-
-Appliquez les migrations :
-
-```bash
 php bin/console doctrine:migrations:migrate
-```
-
-Alimentez la base de donnée:
-
-```bash
 php bin/console doctrine:fixtures:load
 ```
 
-### 5. Configuration JWT (Authentification)
+5. **Compiler les assets (CSS/JS)**
 
-Créez le dossier pour les clés JWT :
+    Si tu utilises AssetMapper (par défaut Symfony 6.3+) :
 
-```bash
-mkdir config/jwt
-```
+    ```bash
+    php bin/console asset-map:compile
+    ```
 
-Générez les clés privée et publique :
-
-```bash
-# Clé privée (vous devrez saisir une passphrase)
-openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-
-# Clé publique
-openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
-```
-
-Ajoutez la passphrase dans votre fichier `.env.local` :
-
-```env
-JWT_PASSPHRASE=votre_passphrase_ici
-```
+    > Le CSS sera généré dans `public/assets/` et utilisable en dev comme en prod.
 
 ### 6. Démarrer le serveur de développement
 
 ```bash
 symfony server:start
+# ou
+php -S localhost:8000 -t public
 ```
 
 ### 7. Connectez-vous
 
+-   Ouvre [http://localhost:8000](http://localhost:8000) dans ton navigateur.
 -   Inscription possible directement sur le site.
+
+## 🔄 Tester en production
+
+### 1. Modifie la variable d’environnement dans `.env.local`
+
+```env
+APP_ENV=prod
+```
+
+### 2. Vide le cache et compile les assets en prod :
+
+```bash
+php bin/console cache:clear --env=prod
+php bin/console asset-map:compile --env=prod
+```
