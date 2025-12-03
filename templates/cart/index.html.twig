@@ -44,7 +44,10 @@
             </div>
         </div> 
         <div class="cartContainer-button">
-            <button type="submit" href="#" class="btn">Valider la commande</button>
+            <form method="post" action="{{ path('app_order_add') }}" onsubmit="return confirm('Valider votre commande');">
+                <input type="hidden" name="_token" value="{{ csrf_token('order_add') }}">
+                <button type="submit" class="btn">Valider la commande</button>
+            </form>
         </div>
         {% endif %}
     </div>
