@@ -88,6 +88,6 @@ final class OrderController extends AbstractController
         $this->entityManager->flush();
         flash()->success('Votre commande a bien été prise en compte !');
 
-        return $this->redirectToRoute('app_cart_show');
+        return $this->redirectToRoute('app_order_show');
     }
 }

@@ -20,7 +20,24 @@
                 </div>
                 {% else %}
                 <div class="orderCard-orderList">
-                    <p>Votre historique de commandes est vide.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Date</th>
+                                <th>Prix</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for orderItem in order %}
+                            <tr>
+                                <td>{{ '%02d'|format(loop.index) }}</td>
+                                <td>{{ orderItem.createdAt|date('d/m/Y') }}</td>
+                                <td>{{ orderItem.totalPrice|number_format(2, ',', ' ') }}€</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
                 {% endif %}
             </div>

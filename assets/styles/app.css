@@ -7,6 +7,7 @@
     --color-secondary: #565656;
     --color-background: #fffdf7;
     --color-background-account: #f7f1ec;
+    --color-background-product-conviction: #ebe3d3;
     --color-background-secondary: #f6f5f0;
     --color-background-tertiary: #e8f0e3;
     --color-text: #333333;
@@ -39,7 +40,7 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
     font-family: "Inter", "Courier New", Courier, monospace;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 400;
     color: var(--color-text);
     background-color: var(--color-background);
@@ -149,13 +150,13 @@ footer {
 }
 
 .banner-text h1 {
-    font-size: 4.2rem;
+    font-size: 4rem;
     font-weight: 500;
     margin-bottom: 38px;
 }
 
 .banner-text p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 300;
     margin-bottom: 16px;
 }
@@ -206,7 +207,7 @@ footer {
 }
 
 .productList-item h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 8px;
 }
@@ -232,6 +233,77 @@ footer {
 .productList-item .link:hover {
     background-color: var(--color-primary);
     color: var(--color-background);
+}
+
+.productConviction {
+    height: 646px;
+    background-color: var(--color-background-product-conviction);
+    display: flex;
+}
+
+.productConviction-textWrapper {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    padding: 40px;
+}
+
+.productConviction-textWrapper h2 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.productConviction-textWrapper p {
+    max-width: 425px;
+    font-weight: 300;
+}
+
+.productConviction-imageWrapper {
+    width: 487px;
+}
+
+.productConviction-imageWrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.productValeur {
+    height: 646px;
+    background-color: var(--color-background-tertiary);
+    display: flex;
+}
+
+.productValeur-textWrapper {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 40px;
+}
+
+.productValeur-textWrapper h2 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.productValeur-textWrapper p {
+    max-width: 425px;
+    font-weight: 300;
+}
+
+.productValeur-imageWrapper {
+    width: 487px;
+}
+
+.productValeur-imageWrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* ----------- AUTH ---------- */
@@ -400,7 +472,6 @@ footer {
 }
 
 .productContainer-info .description {
-    font-size: 0.9rem;
     color: var(--color-text-secondary);
 }
 
@@ -571,6 +642,46 @@ footer {
     align-items: center;
     width: 100%;
     gap: 30px;
+}
+
+.orderCard-orderList table {
+    width: 100%;
+    border-spacing: 0 20px;
+}
+
+.orderCard-orderList th {
+    color: var(--color-text-secondary);
+}
+
+.orderCard-orderList th:nth-child(1),
+.orderCard-orderList td:nth-child(1) {
+    width: 35%;
+    text-align: left;
+}
+
+.orderCard-orderList th:nth-child(2),
+.orderCard-orderList td:nth-child(2) {
+    width: 20%;
+    text-align: left;
+}
+
+.orderCard-orderList th:nth-child(3),
+.orderCard-orderList td:nth-child(3) {
+    width: 45%;
+    text-align: right;
+}
+
+.orderCard-orderList th:nth-child(3) {
+    padding-right: 30px;
+}
+
+.orderCard-orderList tr:not(:last-child) td {
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 30px;
+}
+
+.orderCard-orderList td {
+    font-weight: 500;
 }
 
 .orderContainer-button {
