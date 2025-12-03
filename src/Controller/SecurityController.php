@@ -101,20 +101,14 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        // Supprimer le panier et les items associés de l'utilisateur
+        // Supprimer le panier de l'utilisateur
         $cart = $user->getCart();
         if ($cart) {
-            foreach ($cart->getCartItems() as $cartItem) {
-                $this->entityManager->remove($cartItem);
-            }
             $this->entityManager->remove($cart);
         }
 
-        // Supprimer les commandes associées de l'utilisateur et les items de commande associés
+        // Supprimer les commandes associées de l'utilisateur
         foreach ($user->getOrders() as $order) {
-            foreach ($order->getOrderItems() as $orderItem) {
-                $this->entityManager->remove($orderItem);
-            }
             $this->entityManager->remove($order);
         }
 

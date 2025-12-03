@@ -54,7 +54,13 @@ final class OrderController extends AbstractController
         // Création de la commande
         $order = new Order();
         $order->setUser($user);
-        $order->setReference(uniqid('REF-'));
+        $year = (new \DateTime())->format('Y');
+        $month = (new \DateTime())->format('m');
+        $day = (new \DateTime())->format('d');
+        $userId = $user->getId();
+        $random = mt_rand(1000, 9999);
+        $reference = sprintf('%s-%s%s%s%s', $year, $month, $day, $userId, $random);
+        $order->setReference($reference);
         $totalPrice = 0.00;
 
         // Memorisation des Produits du panier dans la commande
