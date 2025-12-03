@@ -5,11 +5,11 @@
 {% block title %}GreenGoodies - Inscription{% endblock %}
 
 {% block body %}
-<div class="authContainer">
-    <div class="authContainer-image">
+<section class="auth">
+    <div class="auth__image-container">
         <img src="{{ asset('uploads/inscription.webp') }}" alt="Bannière inscription">
     </div>
-    <div class="authContainer-form">
+    <div class="auth__form-container">
         <h1>Inscription</h1>
         <p>Tous les champs sont obligatoires.</p>
         {{ form_start(registrationForm) }}
@@ -44,5 +44,5 @@
             </p>
         {{ form_end(registrationForm) }}
     </div>
-</div>
+</section>
 {% endblock %}

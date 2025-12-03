@@ -25,7 +25,7 @@ final class ProductController extends AbstractController
             9
         );
 
-        return $this->render('product/index.html.twig', [
+        return $this->render('homepage/index.html.twig', [
             'products' => $products,
         ]);
     }
@@ -55,7 +55,7 @@ final class ProductController extends AbstractController
             }
         }
 
-        return $this->render('product/product.html.twig', [
+        return $this->render('product/show.html.twig', [
             'product' => $product,
             'quantityItemInCart' => $quantityItemInCart,
         ]);

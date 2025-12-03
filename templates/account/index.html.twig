@@ -1,0 +1,73 @@
+{% set current_route = 'app_order_show' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}GreenGoodies - Mon Compte{% endblock %}
+
+{% block body %}
+
+<section class="account-page">
+    <div class="account-page__container">
+        <h1>Mon compte</h1>
+        <div class="account-page__cards">
+            <div class="account-page__card">
+                <h2>Mes commandes</h2>
+                {% if orders is empty %}
+                    <div class="account-page__card-content">
+                        <p>Votre historique de commandes est vide.</p>
+                        <div class="orderContainer-button">
+                            <a href="{{ path('app_cart_show') }}" class="btn">Consulter mon panier</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="account-page__card-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Date</th>
+                                    <th>Prix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for orderItem in orders %}
+                                <tr>
+                                    <td>{{ '%02d'|format(loop.index) }}</td>
+                                    <td>{{ orderItem.createdAt|date('d/m/Y') }}</td>
+                                    <td>{{ orderItem.totalPrice|number_format(2, ',', ' ') }}€</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="account-page__card">
+                <h2>Mon accès API</h2>
+                {% if not app.user.apiAccessEnabled %}
+                    <div class="account-page__button">
+                        <form method="post" action="{{ path('app_api_access_enable')}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('app_api_access_enable') }}">
+                            <button type="submit" class="btn">Activer mon accès API</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="account-page__button">
+                        <form method="post" action="{{ path('app_api_access_disable')}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('app_api_access_disable') }}">
+                            <button type="submit" class="btn">Désactiver mon accès API</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="account-page__card">
+                <div class="account-page__button">
+                    <form method="post" action="{{ path('app_delete_account')}}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte et toutes vos données associées ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('app_delete_account') }}">
+                        <button type="submit" class="btn">Supprimer mon compte</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

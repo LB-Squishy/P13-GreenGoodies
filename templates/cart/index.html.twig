@@ -5,51 +5,49 @@
 
 {% block body %}
 
-<div class="cartContainer">
-    <div class="cartContainer-wrapper">
+<section class="cart-page">
+    <div class="cart-page__container">
         <h1>Mon panier</h1>
         {% if cartItems is empty %}
-        <div class="cartList">
-            <div class="cartList-item">
-                <p>Votre panier est vide.</p>
+            <div class="cart-page__list">
+                <div class="cart-page__item">
+                    <p>Votre panier est vide.</p>
+                </div>
             </div>
-        </div>
-        <div class="cartContainer-button">
-            <a href="{{ path('app_accueil') }}" class="btn">Consulter nos produits</a>
-        </div>
+            <div class="cart-page__button">
+                <a href="{{ path('app_accueil') }}" class="btn">Consulter nos produits</a>
+            </div>
         {% else %}
-        <p class="link">
             <form method="post" action="{{ path('app_cart_remove_all')}}" onsubmit="return confirm('Êtes-vous sûr de vouloir vider votre panier ?');">
                 <input type="hidden" name="_token" value="{{ csrf_token('cart_remove_all') }}">
                 <button type="submit" class="linkBtn">x Vider le panier</button>
             </form>
-        </p>
-        <div class="cartList">
-            {% for cartItem in cartItems %}
-            <a href="{{ path('app_product_show', {'id': cartItem.product.id}) }}" class="cartList-item">
-                <img src="{{ asset('uploads/products/sm/' ~ cartItem.product.picture) }}" alt="{{ cartItem.product.name }}">
-                <div class="infos">
-                    <h2>{{ cartItem.product.name }}</h2>
-                    <p class="quantity">Quantité : {{ cartItem.quantity }}</p>
-                    <p class="price">{{ cartItem.product.price|number_format(2, ',', ' ') }}€</p>
+            <div class="cart-page__list">
+                {% for cartItem in cartItems %}
+                    <a href="{{ path('app_product_show', {'id': cartItem.product.id}) }}" class="cart-page__item">
+                        <img src="{{ asset('uploads/products/sm/' ~ cartItem.product.picture) }}" alt="{{ cartItem.product.name }}">
+                        <div class="infos">
+                            <h2>{{ cartItem.product.name }}</h2>
+                            <p class="quantity">Quantité : {{ cartItem.quantity }}</p>
+                            <p class="price">{{ cartItem.product.price|number_format(2, ',', ' ') }}€</p>
+                        </div>
+                    </a>
+                {% endfor %}
+                <div class="cart-page__total">
+                    <div class="cart-page__total-price">
+                        <p class="cart-page__total-price--text">Total panier :</p>
+                        <p class="cart-page__total-price--price">{{ cartTotalPrice|number_format(2, ',', ' ') }}€</p>
+                    </div>
+                    <p class="cart-page__total-livraison">Frais de livraison : Offert</p>
                 </div>
-            </a>
-            {% endfor %}
-            <div class="cartList-total">
-                <div class="totalPrice">
-                    <p class="totalPrice-text">Total panier :</p>
-                    <p class="totalPrice-price">{{ cartTotalPrice|number_format(2, ',', ' ') }}€</p>
-                </div>
-                <p class="livraison">Frais de livraison : Offert</p>
+            </div> 
+            <div class="cart-page__button">
+                <form method="post" action="{{ path('app_order_add') }}" onsubmit="return confirm('Valider votre commande');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('order_add') }}">
+                    <button type="submit" class="btn">Valider la commande</button>
+                </form>
             </div>
-        </div> 
-        <div class="cartContainer-button">
-            <form method="post" action="{{ path('app_order_add') }}" onsubmit="return confirm('Valider votre commande');">
-                <input type="hidden" name="_token" value="{{ csrf_token('order_add') }}">
-                <button type="submit" class="btn">Valider la commande</button>
-            </form>
-        </div>
         {% endif %}
     </div>
-</div>
+</section>
 {% endblock %}

@@ -30,7 +30,7 @@
                     {% if is_granted('ROLE_USER') %}
                         <li><a href="{{ path('app_logout') }}" class="{{ current_route == 'app_logout' ? 'active' : '' }}">Déconnexion</a></li>
                     {% else %}
-                    <li><a href="{{ path('app_login') }}" class="{{ current_route == 'app_login' or current_route == 'app_register' ? 'active' : '' }}">Connexion</a></li>
+                        <li><a href="{{ path('app_login') }}" class="{{ current_route == 'app_login' or current_route == 'app_register' ? 'active' : '' }}">Connexion</a></li>
                     {% endif %}
                 </ul>
             </nav>

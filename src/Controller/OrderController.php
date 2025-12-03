@@ -23,10 +23,10 @@ final class OrderController extends AbstractController
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
-        $order = $user->getOrders();
+        $orders = $user->getOrders();
 
-        return $this->render('order/index.html.twig', [
-            'order' => $order,
+        return $this->render('account/index.html.twig', [
+            'orders' => $orders,
         ]);
     }
 

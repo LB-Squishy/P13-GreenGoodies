@@ -12,12 +12,14 @@ ou
 #}
 
 {% block body %}
-<div class="error-container">
-    <div>
+<section class="error-page">
+    <div class="error-page__content">
         <h1>500</h1>
-        <p class="error-message">Erreur serveur</p>
-        <p class="error-description">Une erreur est survenue sur le serveur. Veuillez réessayer plus tard.</p>
+        <p class="message">Erreur serveur</p>
+        <p class="description">Une erreur est survenue sur le serveur. Veuillez réessayer plus tard.</p>
     </div>
-    <a href="{{ path('app_accueil') }}" class="btn">Retour à l'accueil</a>
-</div>
+    <div class="error-page__button">
+        <a href="{{ path('app_accueil') }}" class="btn">Retour à l'accueil</a>
+    </div>
+</section>
 {% endblock %}

@@ -4,23 +4,23 @@
 {% block title %}GreenGoodies - Homepage{% endblock %}
 
 {% block body %}
-<div class="banner">
-    <div class="banner-text">
-        <div class="banner-text-wrapper">
+<section class="homepage-banner">
+    <div class="homepage-banner__text-container">
+        <div class="homepage-banner__text-content">
             <h1>Bienvenue</h1>
             <p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable.</p>
             <p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter éco-responsable.</p>
         </div>
     </div>
-    <div class="banner-image">
+    <div class="homepage-banner__image-container">
         <img src="{{ asset('uploads/welcome.webp') }}" alt="Bannière GreenGoodies">
     </div>
-</div>
-<div class="productList">
-    <h2>Nos produits</h2>
-    <div class="productList-grid">
+</section>
+<section class="homepage-product-list">
+    <h2 class="homepage-product-list__title">Nos produits</h2>
+    <div class="homepage-product-list__grid">
         {% for product in products %}
-            <div class="productList-item">
+            <div class="homepage-product-list__item">
                 <img src="{{ asset('uploads/products/md/' ~ product.picture) }}" alt="{{ product.name }}">
                 <h3>{{ product.name }}</h3>
                 <p class="description">{{ product.shortDescription }}</p>
@@ -29,27 +29,27 @@
             </div>
         {% endfor %}
     </div>
-</div>
-<div class="productConviction">
-    <div class="productConviction-textWrapper">
+</section>
+<section class="conviction homepage-section-spliter">
+    <div class="homepage-section-spliter__text-wrapper">
         <div>
             <h2>NOTRE CONVICTION</h2>
             <p>Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien-être pour la planète et ses habitants. Notre mission est de vous proposer une sélection rigoureuse de produits qui allient qualité, durabilité et éthique.</p>
         </div>
     </div>
-    <div class="productConviction-imageWrapper">
+    <div class="homepage-section-spliter__image-wrapper">
         <img src="{{ asset('uploads/conviction.webp') }}" alt="arbousier">
     </div>
-</div>
-<div class="productValeur">
-    <div class="productValeur-imageWrapper">
+</section>
+<section class="valeur homepage-section-spliter">
+    <div class="homepage-section-spliter__image-wrapper">
         <img src="{{ asset('uploads/valeurs.webp') }}" alt="Illustration sac poubelle">
     </div>
-    <div class="productValeur-textWrapper">
+    <div class="homepage-section-spliter__text-wrapper homepage-section-spliter__text-wrapper--right">
         <div>
             <h2>NOS VALEURS</h2>
             <p>Durabilité : Nous sélectionnons soigneusement des produits qui respectent l'environnement et favorisent la durabilité. Éthique : Nous nous engageons à travailler avec des partenaires et des fournisseurs qui partagent nos valeurs éthiques. Écologie : Nous encourageons des pratiques respectueuses de l'écosystème et privilégions les matériaux écologiques.</p>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
