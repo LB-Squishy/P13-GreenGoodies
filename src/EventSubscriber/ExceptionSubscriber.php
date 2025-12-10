@@ -5,7 +5,9 @@ namespace App\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
@@ -16,6 +18,16 @@ class ExceptionSubscriber implements EventSubscriberInterface
         // Ne gérer que les exceptions pour les API (URL commençant par /api)
         $request = $event->getRequest();
         if (!str_starts_with($request->getPathInfo(), '/api')) {
+            return;
+        }
+
+        if ($exception instanceof AccessDeniedException || $exception instanceof AccessDeniedHttpException) {
+            $data = [
+                'status' => 403,
+                'message' => 'Accès API non activé'
+            ];
+
+            $event->setResponse(new JsonResponse($data, JsonResponse::HTTP_FORBIDDEN));
             return;
         }
 
