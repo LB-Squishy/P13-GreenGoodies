@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/panier')]
 final class CartController extends AbstractController
 {
     public function __construct(
@@ -20,8 +20,7 @@ final class CartController extends AbstractController
         private EntityManagerInterface $entityManager,
     ) {}
 
-    #[Route('/panier', name: 'app_cart_show')]
-    #[IsGranted('ROLE_USER')]
+    #[Route('', name: 'app_cart_show')]
     public function index(): Response
     {
         /** @var \App\Entity\User|null $user */
@@ -43,8 +42,7 @@ final class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/panier/ajouter/{id}', name: 'app_cart_add', methods: ['POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[Route('/ajouter/{id}', name: 'app_cart_add', methods: ['POST'])]
     public function addItemInCart(?Product $product, Request $request): Response
     {
         // Vérifie si le produit est actif et existe
@@ -111,8 +109,7 @@ final class CartController extends AbstractController
         return $this->redirectToRoute('app_cart_show');
     }
 
-    #[Route('/panier/vider', name: 'app_cart_remove_all', methods: ['POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[Route('/vider', name: 'app_cart_remove_all', methods: ['POST'])]
     public function removeAllFromCart(Request $request): Response
     {
         /** @var \App\Entity\User|null $user */

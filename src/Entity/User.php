@@ -67,9 +67,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $cguAccepted = false;
 
-    #[ORM\Column]
-    private bool $apiAccessEnabled = false;
-
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -217,18 +214,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCguAccepted(bool $cguAccepted): static
     {
         $this->cguAccepted = $cguAccepted;
-
-        return $this;
-    }
-
-    public function isApiAccessEnabled(): bool
-    {
-        return $this->apiAccessEnabled;
-    }
-
-    public function setApiAccessEnabled(bool $apiAccessEnabled): static
-    {
-        $this->apiAccessEnabled = $apiAccessEnabled;
 
         return $this;
     }

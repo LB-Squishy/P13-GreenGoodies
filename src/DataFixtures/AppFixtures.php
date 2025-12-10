@@ -27,20 +27,18 @@ class AppFixtures extends Fixture
             ->setPassword($this->userPasswordHasher->hashPassword($user, 'user'))
             ->setLastName('Doe')
             ->setFirstName('John')
-            ->setCguAccepted(true)
-            ->setApiAccessEnabled(false);
+            ->setCguAccepted(true);
         $manager->persist($user);
 
         // Création d'un user "admin"
         $user = new User();
         $user
             ->setEmail('admin@geengoodies.com')
-            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+            ->setRoles(['ROLE_USER', 'ROLE_API_ACCESS'])
             ->setPassword($this->userPasswordHasher->hashPassword($user, 'admin'))
             ->setLastName('Dupond')
             ->setFirstName('Jane')
-            ->setCguAccepted(true)
-            ->setApiAccessEnabled(false);
+            ->setCguAccepted(true);
         $manager->persist($user);
 
         // Création de products
