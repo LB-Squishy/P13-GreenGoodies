@@ -36,7 +36,29 @@ git clone https://github.com/votre-username/EcoGardenApi.git
 cd EcoGardenApi
 ```
 
-### 2. Préparez le fichier `.env.local`
+### 2. Installer les dépendances
+
+```bash
+composer install
+```
+
+### 3. Générer les clés JWT
+
+Créez un dossier `jwt` dans le dossier `config` puis générez les clés
+
+Clé privée:
+
+```bash
+openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+```
+
+Clé publique:
+
+```bash
+openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
+```
+
+### 4. Préparez le fichier `.env.local`
 
 Créez un fichier .env.local et configurez vos variables d'environnement
 
@@ -46,13 +68,7 @@ APP_SECRET=ta_clé_secret
 JWT_PASSPHRASE=ta_passphrase
 ```
 
-### 3. Installer les dépendances
-
-```bash
-composer install
-```
-
-### 4. Configuration de la base de données
+### 5. Configuration de la base de données
 
 Créez la base de données et l'alimenter :
 
@@ -62,7 +78,7 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
 
-5. **Compiler les assets (CSS/JS)**
+### 6. Compiler les assets (CSS/JS)
 
     Si tu utilises AssetMapper (par défaut Symfony 6.3+) :
 
@@ -72,7 +88,7 @@ php bin/console doctrine:fixtures:load
 
     > Le CSS sera généré dans `public/assets/` et utilisable en dev comme en prod.
 
-### 6. Démarrer le serveur de développement
+### 7. Démarrer le serveur de développement
 
 ```bash
 symfony server:start
@@ -80,7 +96,7 @@ symfony server:start
 php -S localhost:8000 -t public
 ```
 
-### 7. Connectez-vous
+### 8. Connectez-vous
 
 -   Ouvre [http://localhost:8000](http://localhost:8000) dans ton navigateur.
 -   Inscription possible directement sur le site.
