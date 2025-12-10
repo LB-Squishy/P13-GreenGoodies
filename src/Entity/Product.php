@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -16,30 +17,36 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getProducts'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Le nom est obligatoire')]
     #[Assert\Length(max: 255, maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères')]
+    #[Groups(['getProducts'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'La description courte est obligatoire')]
     #[Assert\Length(max: 255, maxMessage: 'La description courte ne peut pas dépasser {{ limit }} caractères')]
+    #[Groups(['getProducts'])]
     private ?string $shortDescription = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'La description complète est obligatoire')]
+    #[Groups(['getProducts'])]
     private ?string $fullDescription = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     #[Assert\NotBlank(message: 'Le prix est obligatoire')]
     #[Assert\Positive(message: 'Le prix doit être positif')]
+    #[Groups(['getProducts'])]
     private ?string $price = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'L\'image est obligatoire')]
     #[Assert\Length(max: 255, maxMessage: 'L\'image ne peut pas dépasser {{ limit }} caractères')]
+    #[Groups(['getProducts'])]
     private ?string $picture = null;
 
     #[ORM\Column(options: ['default' => true])]
