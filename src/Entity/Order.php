@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Table(name: '`order`', uniqueConstraints: [new ORM\UniqueConstraint(name: 'UNIQ_ORDER_REFERENCE', columns: ['reference'])])]
+#[ORM\Table(name: '`order`')]
+#[ORM\UniqueConstraint(name: 'UNIQ_ORDER_REFERENCE', columns: ['reference'])]
 #[UniqueEntity(fields: ['reference'], message: 'Cette reference de commande est déjà utilisé.')]
 class Order
 {
