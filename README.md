@@ -42,6 +42,10 @@ cd EcoGardenApi
 composer install
 ```
 
+```bash
+npm install
+```
+
 ### 3. Générer les clés JWT
 
 Créez un dossier `jwt` dans le dossier `config` puis générez les clés
@@ -80,15 +84,19 @@ php bin/console doctrine:fixtures:load
 
 ### 6. Compiler les assets (CSS/JS)
 
-    Si tu utilises AssetMapper (par défaut Symfony 6.3+) :
+    Webpack Encore pour compilation :
 
     ```bash
-    php bin/console asset-map:compile
+    npm run watch
     ```
 
-    > Le CSS sera généré dans `public/assets/` et utilisable en dev comme en prod.
+    > Les assets seront compilés dans `public/build/`.
 
 ### 7. Démarrer le serveur de développement
+
+**Ouvrez 2 terminaux**
+
+Terminal 1 - Serveur Symfony :
 
 ```bash
 symfony server:start
@@ -96,22 +104,54 @@ symfony server:start
 php -S localhost:8000 -t public
 ```
 
+Terminal 2 - Webpack (avec watch mode) :
+
+```bash
+npm run watch
+```
+
+Autres commandes utiles :
+
+```bash
+# Compiler et minifier les assets
+npm run build
+```
+
 ### 8. Connectez-vous
 
 -   Ouvre [http://localhost:8000](http://localhost:8000) dans ton navigateur.
--   Inscription possible directement sur le site.
+-   Inscription possible directement sur le site pour tester l'appli
 
-## 🔄 Tester en production
+## 🔄 Tester en production (localement)
 
 ### 1. Modifie la variable d’environnement dans `.env.local`
 
 ```env
 APP_ENV=prod
+APP_DEBUG=0
 ```
 
 ### 2. Vide le cache et compile les assets en prod :
 
 ```bash
+npm run build
 php bin/console cache:clear --env=prod
-php bin/console asset-map:compile --env=prod
+php bin/console cache:warmup --env=prod
+```
+
+### 3. Démarrer le serveur en mode production :
+
+```bash
+symfony server:start
+```
+
+### 4. Revenir en mode développement:
+
+```env
+APP_ENV=dev
+APP_DEBUG=1
+```
+
+```bash
+php bin/console cache:clear
 ```
