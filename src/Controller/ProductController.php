@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\Cart\CartAddFormType;
 use App\Repository\ProductRepository;
 use App\Repository\CartItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,9 +56,18 @@ final class ProductController extends AbstractController
             }
         }
 
+        $form = $this->createForm(CartAddFormType::class, [
+            'quantity' => $quantityItemInCart,
+        ], [
+            'action' => $this->generateUrl('app_cart_add', ['id' => $product->getId()]),
+            'method' => 'POST',
+            'csrf_token_id' => 'cart_add' . $product->getId(),
+        ]);
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'quantityItemInCart' => $quantityItemInCart,
+            'form' => $form,
         ]);
     }
 }

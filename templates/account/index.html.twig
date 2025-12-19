@@ -45,26 +45,23 @@
                 <h2>Mon accès API</h2>
                 {% if not is_granted('ROLE_API_ACCESS') %}
                     <div class="account-page__button">
-                        <form method="post" action="{{ path('app_api_access_enable')}}">
-                            <input type="hidden" name="_token" value="{{ csrf_token('app_api_access_enable') }}">
+                        {{ form_start(apiAccessEnableForm) }}
                             <button type="submit" class="btn">Activer mon accès API</button>
-                        </form>
+                        {{ form_end(apiAccessEnableForm) }}
                     </div>
                 {% else %}
                     <div class="account-page__button">
-                        <form method="post" action="{{ path('app_api_access_disable')}}">
-                            <input type="hidden" name="_token" value="{{ csrf_token('app_api_access_disable') }}">
+                        {{ form_start(apiAccessDisableForm) }}
                             <button type="submit" class="btn">Désactiver mon accès API</button>
-                        </form>
+                        {{ form_end(apiAccessDisableForm) }}
                     </div>
                 {% endif %}
             </div>
             <div class="account-page__card">
                 <div class="account-page__button">
-                    <form method="post" action="{{ path('app_delete_account')}}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte et toutes vos données associées ?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('app_delete_account') }}">
+                    {{ form_start(deleteAccountForm, {'attr': {'onsubmit': "return confirm('Êtes-vous sûr de vouloir supprimer votre compte et toutes vos données associées ?');"}}) }}
                         <button type="submit" class="btn">Supprimer mon compte</button>
-                    </form>
+                    {{ form_end(deleteAccountForm) }}
                 </div>
             </div>
         </div>

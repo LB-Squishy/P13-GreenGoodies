@@ -18,10 +18,9 @@
                 <a href="{{ path('app_accueil') }}" class="btn">Consulter nos produits</a>
             </div>
         {% else %}
-            <form method="post" action="{{ path('app_cart_remove_all')}}" onsubmit="return confirm('Êtes-vous sûr de vouloir vider votre panier ?');">
-                <input type="hidden" name="_token" value="{{ csrf_token('cart_remove_all') }}">
+            {{ form_start(cartRemoveAllForm, {'attr': {'onsubmit': "return confirm('Êtes-vous sûr de vouloir vider votre panier ?');"}}) }}
                 <button type="submit" class="linkBtn">x Vider le panier</button>
-            </form>
+            {{ form_end(cartRemoveAllForm) }}
             <div class="cart-page__list">
                 {% for cartItem in cartItems %}
                     <a href="{{ path('app_product_show', {'id': cartItem.product.id}) }}" class="cart-page__item">
@@ -42,10 +41,9 @@
                 </div>
             </div> 
             <div class="cart-page__button">
-                <form method="post" action="{{ path('app_order_add') }}" onsubmit="return confirm('Valider votre commande');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('order_add') }}">
+                {{ form_start(orderAddForm, {'attr': {'onsubmit': "return confirm('Valider votre commande');"}}) }}
                     <button type="submit" class="btn">Valider la commande</button>
-                </form>
+                {{ form_end(orderAddForm) }}
             </div>
         {% endif %}
     </div>

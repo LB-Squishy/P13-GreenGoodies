@@ -14,19 +14,9 @@
             <div class="price-quantity">
                 <p class="price">{{ product.price|number_format(2, ',', ' ') }}€</p>
                 {% if is_granted('ROLE_USER') %}
-                    <form id="quantityForm" method="post" action="{{ path('app_cart_add', {'id': product.id}) }}">
-                        <input 
-                            type="number"
-                            id="quantity"
-                            class="quantity"
-                            name="quantity"
-                            min="0"
-                            max="999"
-                            value="{{ quantityItemInCart }}"
-                            required
-                        >
-                        <input type="hidden" name="_token" value="{{ csrf_token('cart_add_' ~ product.id) }}">
-                    </form>
+                    {{form_start(form, {'attr': {'id': 'quantityForm'}})}}
+                        {{ form_row(form.quantity) }}
+                    {{ form_end(form) }}
                 {% endif %}
             </div>
             <p class="label">Description</p>
